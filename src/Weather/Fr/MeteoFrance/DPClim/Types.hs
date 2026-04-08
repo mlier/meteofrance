@@ -112,7 +112,7 @@ instance FromJSON CommandeId where
     CommandeId <$> inner .: "return"
 
 data ApiConfig = ApiConfig
-  { apiToken        :: Text   -- Bearer token (env METEO_TOKEN)
+  { apiKey          :: Text   -- clé API (env METEO_API_KEY)
   , apiBaseUrl      :: Text   -- "https://public-api.meteofrance.fr/public/DPClim/v1"
   , apiInitialWait  :: Int    -- secondes avant premier poll (défaut 5)
   , apiPollInterval :: Int    -- secondes entre polls (défaut 3)

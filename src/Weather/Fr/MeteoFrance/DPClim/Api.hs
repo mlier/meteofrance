@@ -59,9 +59,7 @@ placeOrder cfg sid start end freq = do
             ++ "&date-deb-periode=" ++ startStr
             ++ "&date-fin-periode=" ++ endStr
   req <- parseRequest url
-  let req' = setRequestHeader "Authorization"
-               ["Bearer " <> TE.encodeUtf8 (apiToken cfg)]
-             $ req
+  let req' = setRequestHeader "apikey" [TE.encodeUtf8 (apiKey cfg)] req
   resp <- httpLBS req'
   let code = statusCode (getResponseStatus resp)
   case code of
@@ -96,13 +94,13 @@ downloadFile cfg (CommandeId cid) = do
     url = T.unpack (apiBaseUrl cfg)
           ++ "/commande/fichier?id-cmde=" ++ T.unpack cid
 
-    authHeader = "Bearer " <> TE.encodeUtf8 (apiToken cfg)
+    authHeader = TE.encodeUtf8 (apiKey cfg)
 
     poll 0 = return (Left MaxRetriesReached)
     poll n = do
       r <- try $ do
         req <- parseRequest url
-        httpLBS (setRequestHeader "Authorization" [authHeader] req)
+        httpLBS (setRequestHeader "apikey" [authHeader] req)
       case r of
         Left e -> do
           putStrLn $ "[Api] Erreur réseau: " ++ show (e :: SomeException)

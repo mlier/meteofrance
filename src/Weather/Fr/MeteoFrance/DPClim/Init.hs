@@ -150,7 +150,8 @@ fetchResources mgr datasetId = go (1 :: Int) []
     go page acc = do
       let url = "https://www.data.gouv.fr/api/1/datasets/"
                 ++ T.unpack datasetId
-                ++ "/resources/?page=" ++ show page ++ "&page_size=100"
+                -- ++ "/resources/?page=" ++ show page ++ "&page_size=100"
+      putStrLn $ "[Init] Url : " ++ url
       r <- try $ do
         req  <- parseRequest url
         resp <- httpLBS (setRequestManager mgr req)

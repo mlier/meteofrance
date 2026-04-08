@@ -56,12 +56,33 @@ library
 
 executable meteofrance
     import:           warnings
+    ghc-options:      -threaded
     main-is:          Main.hs
     build-depends:
         base        ^>=4.18.3.0,
         meteofrance,
         text        >=2.0,
         cron        >=0.7
+    hs-source-dirs:   app
+    default-language: Haskell2010
+    default-extensions:
+        OverloadedStrings
+
+executable meteofrance-cli
+    import:           warnings
+    ghc-options:      -threaded
+    main-is:          Cli.hs
+    build-depends:
+        base                  ^>=4.18.3.0,
+        meteofrance,
+        text                  >=2.0,
+        time                  >=1.12,
+        bytestring            >=0.11,
+        sqlite-simple         >=0.4,
+        optparse-applicative  >=0.17,
+        brick                 >=2.0,
+        vty                   >=6.0,
+        vector                >=0.13
     hs-source-dirs:   app
     default-language: Haskell2010
     default-extensions:

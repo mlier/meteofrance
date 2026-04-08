@@ -11,18 +11,18 @@ import Weather.Fr.MeteoFrance.DPClim
 main :: IO ()
 main = do
   hSetBuffering stdout LineBuffering
-  -- Token Bearer depuis variable d'environnement METEO_TOKEN
-  mToken <- lookupEnv "METEO_TOKEN"
+  -- Clé API depuis variable d'environnement METEO_API_KEY
+  mToken <- lookupEnv "METEO_API_KEY"
   token  <- case mToken of
     Nothing -> do
-      putStrLn "[Main] AVERTISSEMENT: METEO_TOKEN non défini. updateRecent sera inopérant."
+      putStrLn "[Main] AVERTISSEMENT: METEO_API_KEY non défini. updateRecent sera inopérant."
       return ""
     Just t -> do
-      putStrLn $ "[Main] Token chargé (" ++ show (length t) ++ " caractères)"
+      putStrLn $ "[Main] Clé API chargée (" ++ show (length t) ++ " caractères)"
       return t
 
   let cfg = ApiConfig
-        { apiToken        = pack token
+        { apiKey          = pack token
         , apiBaseUrl      = "https://public-api.meteofrance.fr/public/DPClim/v1"
         , apiInitialWait  = 5    -- secondes avant premier poll
         , apiPollInterval = 3    -- secondes entre polls
